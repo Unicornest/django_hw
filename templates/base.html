@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bootstrap Demo</title>
+
+    {% block styles %}
+    {% endblock%}
+
+    <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+  </head>
+  <body>
+    <div class="container">
+      <div class="pb-3">
+        {% include 'navbar.html' %}
+      </div>
+      <div class="row">
+        <!-- 左側空白區域 -->
+        <div class="col-md-2">
+          <div style="background-color: #80baf4; height: 100%;"></div>
+        </div>
+
+        <!-- 中間內容區域 -->
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header">
+              {% block title %}
+              <h5>Django app</h5>
+              {% endblock %}
+            </div>
+
+            <div class="card-body">
+              {% block content %}
+              <h2>測試</h2>
+              {% endblock %}
+            </div>
+          </div>
+        </div>
+
+        <!-- 右側空白區域 -->
+        <div class="col-md-2">
+          <div style="background-color: #ff3f3f; height: 100%;"></div>
+        </div>
+      </div>
+      {% include 'footer.html' %}
+    </div>
+
+    <script src="{% static 'scripts/bootstrap.min.js' %}"></script>
+    {% block scripts %}
+    {% endblock %}
+  </body>
+</html>

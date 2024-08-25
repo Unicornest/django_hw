@@ -1,0 +1,62 @@
+{% extends 'base.html' %} {% block content %}
+<h2>Todo List</h2>
+<form method="POST">
+  {% csrf_token %}
+  <div class="input-group mb-3">
+    <input
+      type="text"
+      name="todo_text"
+      placeholder="想要做什麼?"
+      class="form-control"
+    />
+    <button type="submit" class="btn btn-primary">送出</button>
+  </div>
+</form>
+
+<table class="table custom-table">
+  <thead>
+    <tr>
+      <th>狀態</th>
+      <th>待辦事項</th>
+      <th>編輯</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for todo in todoAll %}
+    <tr>
+      <td>
+        <form
+          method="POST"
+          action="{% url 'todolist:todo_completed' todo.todo_id %}"
+          style="display: inline"
+        >
+          {% csrf_token %}
+          <input
+            type="checkbox"
+            name="completed"
+            value="true"
+            {% if todo.todo_completed %}
+            checked
+            {% endif %}
+            onchange="this.form.submit()"
+          />
+          {% if todo.todo_completed %}
+          <span>已完成</span>
+          {% else %}
+          <span>未完成</span>
+          {% endif %}
+        </form>
+      </td>
+      <td>{{ todo.todo_text }}</td>
+      <td>
+        <a href="{% url 'todolist:todo_delete' todo.todo_id %}" 
+        class="btn btn-danger"
+        onclick="return confirm('確定要刪除此事項嗎?');">
+        刪除
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
